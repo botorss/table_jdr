@@ -1,0 +1,18 @@
+{
+  "name": "Table JDR",
+  "short_name": "Table JDR",
+  "start_url": "./?mode=player",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#121212",
+  "theme_color": "#121212",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "description": "Vue joueur pour Table JDR"
+}
