@@ -77,3 +77,22 @@ body.player header,body.player aside,body.player .boardbar,body.player footer,bo
 body.player #joinform{position:absolute;z-index:10}
 @media(orientation:portrait){body.player main,body.player .board,body.player #map{width:100%!important;height:100%!important}}
 @media(orientation:landscape){body.player main,body.player .board,body.player #map{width:100%!important;height:100%!important}}
+
+/* Galerie superposée sans occulter la carte. */
+#gallery-drop{display:block;text-align:center;background:#181818;border:1px dashed #494949;margin:10px 0}
+#gallery-drop.dragover{border-color:#3b19e3;background:#252035}
+#gallery-list{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.gallery-row{display:flex;align-items:center;gap:5px;background:#181818;border:1px solid #303030;border-radius:8px;padding:4px}
+.gallery-row.shown{border-color:#3b19e3}
+.gallery-toggle{min-width:0;flex:1;display:flex;gap:9px;align-items:center;border:0!important;text-align:left;background:transparent!important;padding:3px}
+.gallery-toggle img{width:34px;height:34px;object-fit:cover;border-radius:4px}
+.gallery-toggle span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gallery-remove{padding:5px 9px!important}
+#image-windows{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden}
+.gallery-window{position:absolute;pointer-events:auto;display:flex;flex-direction:column;border:1px solid #656565;background:#181818;border-radius:9px;overflow:hidden;box-shadow:0 8px 36px #000b;min-width:0;}
+.gallery-window-head{height:29px;line-height:29px;padding:0 10px;color:#eee;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:grab;touch-action:none;flex-shrink:0}
+.gallery-window img{display:block;width:100%;height:auto;max-height:48vh;object-fit:contain;pointer-events:none;user-select:none}
+.gallery-resize{position:absolute;right:0;bottom:0;width:22px;height:22px;cursor:nwse-resize;touch-action:none;background:linear-gradient(135deg,transparent 56%,#a795ff 57%,#a795ff 65%,transparent 66%)}
+body.player .gallery-window,body.locked .gallery-window{pointer-events:none}
+body.player .gallery-window-head,body.locked .gallery-window-head{cursor:default}
+body.player .gallery-resize,body.locked .gallery-resize{display:none}

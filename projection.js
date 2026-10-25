@@ -28,5 +28,5 @@ export function makeProjection(scene,image,fog) {
 export function frameToScene(frame) {
   // Reconstruct a public-only scene; never use any private field from a packet.
   if(!frame||frame.version!==1||!Array.isArray(frame.tokens)||frame.tokens.length>500)throw Error('Vue joueurs invalide');
-  return {version:1,title:frame.title,width:frame.width,height:frame.height,image:frame.image,grid:frame.grid,showGrid:false,snap:false,baseRevealed:true,fog:[],activeTokenId:typeof frame.activeTokenId==='string'&&frame.tokens.some(t=>t.id===frame.activeTokenId)?frame.activeTokenId:null,tokens:frame.tokens.map(({id,name,kind,x,y,color})=>({id,name,kind,x,y,color,hidden:false}))};
+  return {version:1,title:frame.title,width:frame.width,height:frame.height,image:frame.image,grid:frame.grid,showGrid:false,snap:false,baseRevealed:true,fog:[],activeTokenId:typeof frame.activeTokenId==='string'&&frame.tokens.some(t=>t.id===frame.activeTokenId)?frame.activeTokenId:null,gallery:Array.isArray(frame.gallery)?frame.gallery:[],tokens:frame.tokens.map(({id,name,kind,x,y,color})=>({id,name,kind,x,y,color,hidden:false}))};
 }
