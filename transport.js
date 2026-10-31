@@ -1,5 +1,5 @@
 // Carries PUBLIC frames only, never the private GM scene.
-export function localTransport(onFrame,onRequest){const channel=typeof BroadcastChannel==='function'?new BroadcastChannel('table-jdr-public-v2'):null;channel?.addEventListener('message',e=>{if(e.data.type==='frame')onFrame(e.data.frame);if(e.data.type==='request')onRequest()});return{publish:frame=>channel?.postMessage({type:'frame',frame}),request:()=>channel?.postMessage({type:'request'}),close:()=>channel?.close()};}
+export function localTransport(onFrame,onRequest,onPing){const channel=typeof BroadcastChannel==='function'?new BroadcastChannel('table-jdr-public-v2'):null;channel?.addEventListener('message',e=>{if(e.data.type==='frame')onFrame(e.data.frame);if(e.data.type==='request')onRequest();if(e.data.type==='ping'&&Number.isFinite(e.data.x)&&Number.isFinite(e.data.y))onPing?.(e.data)});return{publish:frame=>channel?.postMessage({type:'frame',frame}),ping:(x,y)=>channel?.postMessage({type:'ping',x,y}),request:()=>channel?.postMessage({type:'request'}),close:()=>channel?.close()};}
 
 async function api(path,options={}) {
   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);
@@ -48,12 +48,15 @@ export function networkHost(onStatus,onPing) {
     },
     publish(frame){if(!session)return;pending=frame;clearTimeout(retry);retry=null;flush()},
     async stop(){const old=session;session=null;pending=null;generation++;clearInterval(heartbeat);clearInterval(pingTimer);clearTimeout(retry);retry=null;try{sessionStorage.removeItem('table-jdr-session-v2')}catch{};if(old)await api('/api/sessions/'+old.id,{method:'DELETE',headers:{Authorization:'Bearer '+old.hostToken}})},
+    hostPing(x,y){if(!session)return;api('/api/pings/'+encodeURIComponent(session.id),{method:'POST',headers:{Authorization:'Bearer '+session.hostToken},body:JSON.stringify({x,y})}).catch(()=>{})},
     localPing(x,y){if(!session)return;api('/api/pings/'+encodeURIComponent(session.id),{method:'POST',headers:{Authorization:'Bearer '+session.playerToken},body:JSON.stringify({x,y})}).catch(()=>{})},
     active:()=>!!session
   };
 }
-export function networkPlayer({id,token,onFrame,onStatus,onClear}) {
-  let revision=0,stopped=false,timer,cleared=false;
+export function networkPlayer({id,token,onFrame,onPing,onStatus,onClear}) {
+  let revision=0,stopped=false,timer,cleared=false,pingRevision=0,pingTimer;
+  async function pollPings(){if(stopped)return;try{const result=await api('/api/pings/'+encodeURIComponent(id)+'?after='+pingRevision,{headers:{Authorization:'Bearer '+token}});if(stopped)return;pingRevision=result.revision;for(const ping of result.pings||[])onPing?.(ping)}catch{}}
+  pingTimer=setInterval(pollPings,350);pollPings();
   async function poll(){
     if(stopped)return;
     try {
@@ -74,7 +77,7 @@ export function networkPlayer({id,token,onFrame,onStatus,onClear}) {
   }
   poll();return{
     ping(x,y){if(stopped)return;api('/api/pings/'+encodeURIComponent(id),{method:'POST',headers:{Authorization:'Bearer '+token},body:JSON.stringify({x,y})}).catch(()=>{});},
-    close(){stopped=true;clearTimeout(timer)}
+    close(){stopped=true;clearTimeout(timer);clearInterval(pingTimer)}
   };
 }
 export const serverInfo=()=>api('/api/info');

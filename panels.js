@@ -2,6 +2,9 @@
 // Sections repliables et positionnement des aides hors de la zone scrollable.
 const controlsPanel=document.getElementById('controls');
 controlsPanel.querySelectorAll('.section-toggle').forEach(button=>{
+  const body=document.getElementById(button.getAttribute('aria-controls'));
+  button.setAttribute('aria-expanded','false');
+  if(body)body.hidden=true;
   button.addEventListener('click',()=>{
     const body=document.getElementById(button.getAttribute('aria-controls'));
     const open=button.getAttribute('aria-expanded')!=='true';
@@ -22,16 +25,6 @@ controlsPanel.querySelectorAll('.mini-info').forEach(el=>{
   el.addEventListener('pointerenter',()=>locateHelp(el,'tip'));
   el.addEventListener('focus',()=>locateHelp(el,'tip'));
 });
-const qrHelp=document.getElementById('qr-help');
-const qrButton=document.getElementById('qr-info');
-if(qrHelp&&qrButton){
-  const refreshQR=()=>locateHelp(qrButton,'qr');
-  qrHelp.addEventListener('pointerenter',refreshQR);
-  qrButton.addEventListener('focus',refreshQR);
-  qrButton.addEventListener('click',refreshQR);
-  controlsPanel.addEventListener('scroll',refreshQR,{passive:true});
-}
-
 // Infobulles rendues directement sous body pour éviter tout rognage Safari.
 const floating=document.createElement('div');floating.id='floating-help';floating.hidden=true;document.body.append(floating);
 let activeHelp=null;
@@ -56,12 +49,5 @@ controlsPanel.querySelectorAll('.mini-info').forEach(el=>{
   el.addEventListener('pointerenter',()=>showFloating(el));el.addEventListener('pointerleave',()=>hideFloating(el));
   el.addEventListener('focus',()=>showFloating(el));el.addEventListener('blur',()=>hideFloating(el));
 });
-if(qrButton){
-  qrButton.addEventListener('pointerenter',()=>showFloating(qrButton,true));
-  qrButton.addEventListener('pointerleave',()=>hideFloating(qrButton));
-  qrButton.addEventListener('focus',()=>showFloating(qrButton,true));
-  qrButton.addEventListener('blur',()=>hideFloating(qrButton));
-  qrButton.addEventListener('click',()=>activeHelp===qrButton?hideFloating(qrButton):showFloating(qrButton,true));
-}
 controlsPanel.addEventListener('scroll',()=>{if(activeHelp)positionFloating(activeHelp)},{passive:true});
 window.addEventListener('resize',()=>{if(activeHelp)positionFloating(activeHelp)});

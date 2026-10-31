@@ -86,21 +86,23 @@ class Handler(SimpleHTTPRequestHandler):
                 sid=path.rsplit('/',1)[-1];s=sessions.get(sid)
                 if not s:return self.json_response(404,{'error':'Partie introuvable'})
                 if self.command=='POST':
-                    if not self.auth(s['playerToken']):return self.json_response(403,{'error':'Accès refusé'})
+                    if not (self.auth(s['playerToken']) or self.auth(s['hostToken'])):return self.json_response(403,{'error':'Accès refusé'})
+                    source='host' if self.auth(s['hostToken']) else 'player'
                     body=self.payload()
                     if not isinstance(body,dict):return self.json_response(400,{'error':'Données invalides'})
                     try:x=float(body.get('x'));y=float(body.get('y'))
                     except (ValueError,TypeError):return self.json_response(400,{'error':'Coordonnées invalides'})
                     if not (0<=x<=1 and 0<=y<=1):return self.json_response(400,{'error':'Coordonnées invalides'})
                     s['pingSeq']+=1
-                    s['pings'].append({'seq':s['pingSeq'],'x':x,'y':y,'time':now})
+                    s['pings'].append({'seq':s['pingSeq'],'x':x,'y':y,'time':now,'source':source})
                     s['pings']=s['pings'][-30:]
                     return self.json_response(200,{'ok':True})
                 if self.command=='GET':
-                    if not self.auth(s['hostToken']):return self.json_response(403,{'error':'Accès refusé'})
+                    if not (self.auth(s['hostToken']) or self.auth(s['playerToken'])):return self.json_response(403,{'error':'Accès refusé'})
+                    source='player' if self.auth(s['hostToken']) else 'host'
                     try:after=int(parse_qs(u.query).get('after',['0'])[0])
                     except ValueError:after=0
-                    return self.json_response(200,{'pings':[{'seq':p['seq'],'x':p['x'],'y':p['y']} for p in s['pings'] if p['seq']>after and now-p['time']<=3], 'revision':s['pingSeq']})
+                    return self.json_response(200,{'pings':[{'seq':p['seq'],'x':p['x'],'y':p['y']} for p in s['pings'] if p['seq']>after and now-p['time']<=3 and p.get('source','player')==source], 'revision':s['pingSeq']})
                 return self.json_response(405,{'error':'Méthode refusée'})
             if path.startswith('/api/sessions/'):
                 sid=path.rsplit('/',1)[-1];s=sessions.get(sid)

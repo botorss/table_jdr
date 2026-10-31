@@ -96,3 +96,193 @@ body.player #joinform{position:absolute;z-index:10}
 body.player .gallery-window,body.locked .gallery-window{pointer-events:none}
 body.player .gallery-window-head,body.locked .gallery-window-head{cursor:default}
 body.player .gallery-resize,body.locked .gallery-resize{display:none}
+
+
+/* Nouvelle palette — uniquement interface, sans modification des outils. */
+:root { color-scheme: dark; background: #090909; color: #F9F9FF; }
+html, body, header, aside, .board, .boardbar, footer, #controls { background: #090909; }
+header, aside, section, .boardbar, footer, #controls > section,
+#controls > section:has(.section-toggle[aria-expanded="true"]),
+#controls .section-body, #combat-panel, .token, .token-selected, .token-current,
+.token .initiative, #enemy-sheet, #joinform, #toast, .qr-info, .qr-popover,
+#floating-help, #gallery-drop, .gallery-row, .gallery-row.shown,
+.gallery-window, input, select, button, .file, .mini-info { border-color: #282828; }
+#controls > section, #controls > section:has(.section-toggle[aria-expanded="true"]),
+#combat-panel, .token, .token-selected, .token-current, #enemy-sheet,
+#joinform, .qr-popover, #floating-help, #gallery-drop, .gallery-row,
+.gallery-window, #toast { background: #090909; }
+input, select, .token .initiative { background: #090909; }
+button, .file, #connect, #combat-start, #combat-end, .qr-info,
+button.active, #gallery-drop { background: #F9F9FF; color: #090909; border-color: #282828; }
+button:hover, .file:hover, #connect:hover, #combat-start:hover,
+button.active:hover { background: #e5e5ed; color: #090909; border-color: #282828; }
+button:disabled { opacity: .5; }
+/* Exceptions : boutons de navigation intégrés et éléments visuellement transparents. */
+.section-toggle, .gallery-toggle { background: transparent !important; color: #F9F9FF; }
+.section-toggle:hover, .gallery-toggle:hover { background: transparent !important; color: #F9F9FF; }
+.token-current { outline: 1px solid #282828; box-shadow: none; }
+.mini-info, .qr-info { color: #090909; }
+#gallery-drop.dragover { background: #191919; border-color: #F9F9FF; }
+html:has(body.player), body.player, body.locked { background: #090909; }
+
+
+/* GitHub Dark — interface épurée (inspirée de GitHub Primer) */
+:root{color-scheme:dark;color:#e6edf3;background:#0d1117;accent-color:#2f81f7}
+html,body{background:#0d1117;color:#e6edf3}
+header{background:#010409;border-bottom:1px solid #21262d}
+header b{color:#e6edf3}header input{color:#e6edf3}
+#controls{background:#0d1117;border-right:1px solid #21262d;gap:8px;padding:12px}
+#controls > section,#controls > section:has(.section-toggle[aria-expanded="true"]){background:#161b22;border:0;border-radius:8px;box-shadow:none}
+#controls h2.section-title{color:#e6edf3}
+.section-toggle,.section-toggle:hover{color:#e6edf3!important}
+.section-toggle:hover{color:#58a6ff!important}
+.section-chevron{color:#8b949e}
+#controls .section-body{border-top:0;padding-top:2px}
+#controls .mini-info{color:#8b949e;border-color:#30363d}
+button,.file,button.active,#connect,#combat-start,#combat-end,#gallery-drop{background:#21262d;color:#e6edf3;border:1px solid #30363d;border-radius:6px;box-shadow:none}
+button:hover,.file:hover,button.active:hover,#connect:hover,#combat-start:hover,#combat-end:hover{background:#30363d;color:#e6edf3;border-color:#484f58}
+button.active{background:#1f6feb;color:#fff;border-color:transparent}
+button.active:hover{background:#388bfd;color:#fff}
+#combat-start,#addpj,#addmob{background:#238636;color:white;border:1px solid #2ea043}
+#combat-start:hover,#addpj:hover,#addmob:hover{background:#2ea043;color:#fff}
+#combat-end{background:#21262d;border-color:#30363d;color:#f85149}
+.section-toggle,.section-toggle:hover,.gallery-toggle,.gallery-toggle:hover{background:transparent!important;border:0!important;box-shadow:none!important}
+input:not([type=checkbox]):not([type=range]):not([type=color]):not([type=file]),select,.token .initiative{background:#0d1117;color:#e6edf3;border:1px solid #30363d;border-radius:6px}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid #2f81f7;outline-offset:2px}
+input::placeholder{color:#6e7681}
+p,small,#connection,#combat-status{color:#8b949e}
+output,#viewlabel,#sessioncode{color:#58a6ff}
+.board,.boardbar,footer{background:#0d1117}
+.boardbar{border-bottom:1px solid #21262d}
+footer{color:#8b949e}
+#combat-panel{background:#0d1117;border:0;border-radius:6px;margin:10px 0 0;padding:12px}
+#combat-panel h3{color:#e6edf3}
+.token,.token-current,.token-selected{background:#21262d;border:0;outline:0;box-shadow:none;animation:none;border-radius:6px}
+.token-current{background:#1c2e43}
+.token-selected{background:#292338}
+.token .initiative{border-color:#30363d}
+.token .turn-arrow{color:#58a6ff}
+.token-dot{display:block;width:12px;height:12px;min-width:12px;border-radius:50%;flex:0 0 12px}
+#newinitiative{margin-bottom:5px}
+#mob-create-stats{margin-bottom:10px}
+#gallery-drop{background:#21262d;border:1px dashed #30363d}
+#gallery-drop.dragover{background:#1c2e43;border-color:#58a6ff}
+.gallery-row,.gallery-row.shown{background:#21262d;border:0}
+.gallery-window,#enemy-sheet,#joinform,.qr-popover,#floating-help,#toast{background:#161b22;border:1px solid #30363d;color:#e6edf3}
+.gallery-window-head{color:#e6edf3}
+#joinform h2,#joinerror,.sheet-heading{color:#58a6ff}
+.mini-info:is(:hover,:focus)::after{background:#161b22;border-color:#30363d;color:#e6edf3}
+#empty{color:#8b949e}
+html:has(body.player),body.player,body.locked{background:#0d1117}
+
+/* Barre d'outils flottante — thème GitHub Dark */
+:root{accent-color:#2f81f7}
+input[type=range],input[type=checkbox]{accent-color:#2f81f7!important}
+input[type=range]:focus-visible,input[type=checkbox]:focus-visible{outline-color:#58a6ff}
+.bottom-toolbar{position:absolute;z-index:8;bottom:48px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:5px;padding:6px;background:#161b22;border:1px solid #30363d;border-radius:12px;box-shadow:0 8px 32px #0008;white-space:nowrap}
+.bottom-toolbar .toolbar-icon{height:43px;width:45px;display:flex;justify-content:center;align-items:center;padding:10px;border:0;border-radius:8px;background:transparent;color:#8b949e;cursor:pointer}
+.bottom-toolbar .toolbar-icon svg{width:23px;height:23px}
+.bottom-toolbar .toolbar-icon:hover{background:#21262d;color:#e6edf3;border:0}
+.bottom-toolbar .toolbar-icon.active{background:#1f6feb;color:white;border:0}
+.bottom-toolbar .toolbar-icon.active:hover{background:#388bfd}
+.toolbar-separator{height:26px;width:1px;background:#30363d;margin:0 3px}
+.toolbar-group{position:relative}
+.toolbar-popover{position:absolute;left:50%;bottom:calc(100% + 14px);transform:translateX(-50%) translateY(5px);width:290px;max-width:calc(100vw - 28px);background:#161b22;border:1px solid #30363d;border-radius:10px;box-shadow:0 12px 32px #0009;padding:16px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s,transform .16s,visibility .16s;white-space:normal}
+.toolbar-popover.open{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.toolbar-popover:after{content:'';position:absolute;top:100%;left:0;width:100%;height:16px}
+.popover-heading{font-weight:600;font-size:13px;margin-bottom:12px;color:#e6edf3}
+.toolbar-popover label{display:block;font-size:12px;color:#8b949e;margin:12px 0}
+.toolbar-popover output{color:#e6edf3}
+.toolbar-popover input[type=range]{display:block;width:100%;margin:10px 0 3px;accent-color:#2f81f7}
+.toolbar-popover button{font-size:12px;padding:8px 9px;border:1px solid #30363d;background:#21262d;color:#e6edf3}
+.toolbar-popover button:hover{background:#30363d}
+.toolbar-popover button.active{background:#1f6feb;border-color:#1f6feb;color:white}
+.fog-tool-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+.fog-tool-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:10px 0}
+#undo{width:100%}
+.toolbar-popover .toolbar-check{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.toolbar-check input[type=checkbox]{margin:0;width:16px;height:16px}
+.toolbar-check input[type=color]{margin:0;width:36px;height:27px}
+body.player .bottom-toolbar,body.locked .bottom-toolbar{display:none!important}
+@media(max-width:650px){.bottom-toolbar{bottom:44px}.toolbar-popover{width:260px}.bottom-toolbar .toolbar-icon{height:40px;width:41px}}
+
+/* Derniers états interactifs harmonisés avec GitHub Dark */
+.token-current{background:#172a42!important;border-color:#2f81f7!important;outline:none!important;box-shadow:none!important}
+.token-selected{background:#1c2633!important;border-color:#30363d!important;outline:none!important}
+.turn-arrow,.token .turn-arrow,#viewlabel{color:#58a6ff!important}
+#gallery-drop.dragover,.gallery-row.shown{border-color:#2f81f7!important;background:#161b22!important}
+#toolbar-fog.active,#toolbar-grid.active{background:#1f6feb!important;color:white!important;border:0!important}
+
+/* Connexion compacte dans l’en-tête ; ancien panneau retiré de la présentation. */
+#sharing{display:none!important}
+.header-connection{position:relative;display:flex;align-items:center;z-index:10050}
+.header-connection .qr-help{display:block;position:relative}
+.header-connection .qr-help[hidden]{display:block;opacity:.55}
+.header-network-icon{width:40px;height:40px;display:grid;place-items:center;padding:0;border:0!important;background:transparent!important;color:#8b949e!important;border-radius:7px;cursor:pointer}
+.header-network-icon:hover,.header-network-icon:focus-visible{background:#21262d!important;color:#58a6ff!important}
+.header-connection .qr-popover{position:absolute;left:auto;right:0;top:calc(100% + 12px);width:336px;max-width:calc(100vw - 24px);padding:16px;background:#161b22;border:1px solid #30363d;border-radius:10px;box-shadow:0 16px 45px #000b;z-index:10051;text-align:center}
+.header-connection .qr-popover strong{color:#e6edf3;font-size:13px;margin-bottom:11px}
+.header-connection .qr-popover img{width:300px;height:300px;max-width:100%;object-fit:contain;background:#fff;border:10px solid white;border-radius:5px;image-rendering:pixelated}
+.header-connection .qr-help[hidden] .qr-popover{display:none!important}
+.header-connection .qr-help:hover .qr-popover,.header-connection .qr-help:focus-within .qr-popover,.header-connection .qr-help.qr-open .qr-popover{display:block}
+body.player .header-connection,body.locked .header-connection{display:none!important}
+@media(max-width:650px){.header-connection .qr-popover{right:-65px;width:300px}.header-connection .qr-popover img{width:260px;height:260px}}
+
+/* Fiche contextuelle ancrée à l'ennemi (uniquement MJ) */
+#enemy-sheet{left:8px;top:8px;right:auto;bottom:auto;width:min(300px,calc(100% - 16px));max-height:calc(100% - 16px);overflow:auto;background:#161b22;border:1px solid #484f58;box-shadow:0 14px 38px #000b;z-index:12}
+#enemy-sheet .sheet-heading{color:#f85149}
+/* Contour rouge uniquement pendant le combat */
+#combat-panel.combat-active{border:2px solid #f85149;background:#1b1115;box-shadow:0 0 0 1px #f8514920}
+#combat-panel:not(.combat-active){border:2px solid transparent}
+#combat-panel button[hidden]{display:none!important}
+
+/* Sélection explicite du pion ennemi dans la liste MJ */
+#tokens .token.token-selected,#tokens .token.token-current.token-selected{background:#321d24!important;outline:2px solid #f85149!important;outline-offset:-2px!important;box-shadow:inset 3px 0 #f85149!important}
+/* Fiche contextuelle compacte : PV modifiables et CA en lecture seule */
+#enemy-sheet{width:min(228px,calc(100% - 16px));padding:11px 12px;border:1px solid #30363d;border-radius:9px;overflow:visible}
+#enemy-sheet .sheet-heading{margin:0 0 10px;gap:10px;color:#e6edf3;font-size:13px;min-width:0}
+#enemy-sheet .sheet-heading strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#enemy-sheet .sheet-heading button{background:none!important;border:0!important;color:#8b949e;padding:0 3px;font-size:19px;line-height:1}
+#enemy-sheet .sheet-hp{display:flex;align-items:center;justify-content:space-between;gap:5px;margin:0 0 8px}
+#enemy-sheet .sheet-stat-label,#enemy-sheet .sheet-ac span{font-size:12px;color:#8b949e;font-weight:600}
+#enemy-sheet .sheet-hp button{flex:0 0 29px;width:29px;height:29px;border-radius:6px;border:1px solid #30363d;background:#21262d;color:#e6edf3;font-size:17px;line-height:1;padding:0}
+#enemy-sheet .sheet-hp button:hover{background:#30363d}
+#enemy-sheet .sheet-hp-count{font-variant-numeric:tabular-nums;text-align:center;white-space:nowrap;color:#e6edf3;font-size:13px;font-weight:600}
+#enemy-sheet .sheet-ac{border-top:1px solid #30363d;padding-top:8px;margin:0;display:flex;justify-content:space-between;align-items:center}
+#enemy-sheet .sheet-ac strong{font-size:13px;color:#e6edf3}
+
+/* Contrôles compacts des pions */
+#tokens .token input[type="number"]{-webkit-appearance:textfield;appearance:textfield;-moz-appearance:textfield}
+#tokens .token input[type="number"]::-webkit-inner-spin-button,
+#tokens .token input[type="number"]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+#tokens .token button[aria-label^="Afficher"],#tokens .token button[aria-label^="Masquer"]{display:grid;place-items:center;background:transparent;border:0;padding:5px;color:#8b949e;flex:0 0 27px}
+#tokens .token button[aria-label^="Afficher"] svg,#tokens .token button[aria-label^="Masquer"] svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#tokens .token button[aria-label^="Afficher"]:hover,#tokens .token button[aria-label^="Masquer"]:hover{color:#e6edf3}
+#tokens .token.token-current{background:#2b271b!important;outline:2px solid #ffe17a!important;outline-offset:-2px!important;box-shadow:0 0 10px #ffcd4740!important}
+#tokens .token.token-current.token-selected{outline:2px solid #ffe17a!important;box-shadow:inset 3px 0 #f85149!important}
+
+/* Fiche PJ et ennemi : suppression réservée aux pions non permanents. */
+#enemy-sheet .sheet-delete{display:block;width:100%;margin-top:10px;padding:7px 9px;background:transparent;color:#f85149;border:1px solid #603137;border-radius:6px;font-size:12px;cursor:pointer}
+#enemy-sheet .sheet-delete:hover{background:#351b20;border-color:#f85149}
+/* En-têtes uniformes, sans pictogramme d'aide. */
+#controls .section-title{display:flex;align-items:center}
+#controls .section-title .section-toggle{flex:1;width:100%}
+
+/* Chargement de cartes par glisser-déposer et actions ZIP */
+.scene-header-button{font-size:12px;font-weight:600;padding:8px 12px;white-space:nowrap;background:#21262d;border:1px solid #30363d;color:#e6edf3}
+.scene-header-button:hover{background:#30363d;border-color:#484f58}
+.scene-header-button:disabled{opacity:.5;cursor:progress}
+body.player .scene-header-button{display:none}
+body.scene-dragging .board::after{content:'Déposer une image pour charger la carte ou un ZIP pour ouvrir une scène';position:absolute;inset:14px 14px 45px;z-index:30;background:#0d1117e8;border:2px dashed #58a6ff;border-radius:16px;display:grid;place-items:center;text-align:center;padding:30px;font-size:20px;color:#e6edf3;pointer-events:none}
+@media(max-width:700px){.scene-header-button{padding:7px;font-size:11px}header{gap:6px}}
+
+/* Actions d'archive compactes dans l'en-tête */
+.scene-header-button{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;min-width:36px;padding:7px;flex:0 0 auto}
+.scene-header-button svg{width:19px;height:19px;display:block}
+@media(max-width:700px){.scene-header-button{width:34px;height:34px;min-width:34px;padding:6px}}
+
+/* Champ scène et actions groupés à gauche, connexion séparée à droite. */
+.scene-title-actions{display:flex;align-items:center;gap:5px;min-width:0;flex:0 1 auto}
+.scene-title-actions #title{width:clamp(125px,19vw,240px);min-width:0;max-width:none}
+header nav{margin-left:auto}
+@media(max-width:700px){.scene-title-actions{flex:1 1 auto}.scene-title-actions #title{flex:1;width:100%}}
